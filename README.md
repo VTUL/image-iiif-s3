@@ -20,5 +20,7 @@ $ export AWS_SECRET_ACCESS_KEY=""
 $ export AWS_BUCKET_NAME=""
 $ export AWS_REGION=""
 ```
-2. Run Ruby script
+2. Run Ruby script:
+```
 $ ruby img_iiif_s3.rb
+```
