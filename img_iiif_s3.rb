@@ -18,10 +18,12 @@ opts[:image_types] = [".jpg", ".tif", ".jpeg", ".tiff"]
 opts[:document_file_types] = [".pdf"]
 opts[:prefix] = "iiif_s3_test/#{@dir_url.split('/')[3..-3].join('/')}"
 
+# Create directories on local disk for manifests/tiles to upload them to S3
 def create_directories(path)
   FileUtils.mkdir_p(path) unless Dir.exists?(path)
 end
 
+# Get label and description metadata from csv file
 def get_metadata(csv_url, id)
   begin
     open(csv_url) do |u|
@@ -30,11 +32,15 @@ def get_metadata(csv_url, id)
       unless File.exists?(csv_file_path)
         File.open(csv_file_path, 'wb') { |f| f.write(u.read) }
       end
-      CSV.read(csv_file_path, 'r:bom|utf-8', headers: true) do |row|
-	puts row['Identifier']
-        if row['Identifier'] == id
-	  return row['Title'], row['Description']
-	end
+      CSV.read(csv_file_path, 'r:bom|utf-8', headers: true).each do |row|
+        if row.header?("Identifier")
+          if row.field("Identifier") == id
+            return row.field("Title"), row.field("Description")
+          end
+        else
+          puts "No Identifier header found"
+          return
+        end
       end
       puts "No matching Identifier found"
     end
@@ -49,7 +55,6 @@ def add_image(file, id)
   name = File.basename(file, File.extname(file))
   page_num = name.split("_").last.to_i
   label, description = get_metadata(@csv_url, id)
-  puts label, description
   obj = {
     "path" => "#{file}",
     "id"       => id,
@@ -97,11 +102,11 @@ while can_open
       img_file = "#{img_file_base_name}.tif"
       img_file_path = "#{@config.output_dir}/#{id}/#{img_file}"
       url = "#{@dir_url}/#{img_file}"
-      can_open = false if img_file_base_name == "#{id}_002"
+      can_open = false if img_file_base_name == "#{id}_003"
     end
   rescue
     can_open = false
   end
 end
-#iiif.load(@data)
-#iiif.process_data
+iiif.load(@data)
+iiif.process_data
