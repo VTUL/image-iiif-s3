@@ -20,7 +20,15 @@ $ export AWS_SECRET_ACCESS_KEY=""
 $ export AWS_BUCKET_NAME=""
 $ export AWS_REGION=""
 ```
-2. Run Ruby script:
+2. Prepare a CSV file
 ```
-$ ruby img_iiif_s3.rb
+e.g. Chadeayne_Ms1990_057_Box1.csv
+```
+3. A folder with image files
+```
+e.g. Special collection folder example: Ms1990_057_Chadeayne/Edited/Ms1990_057_Box1/Ms1990_057_B001_F001_001_LHJClips_Ms/Access/
+```
+4. Run the Ruby script:
+```
+$ ruby create_iiif_s3.rb Chadeayne_Ms1990_057_Box1.csv Ms1990_057_Chadeayne/Edited/Ms1990_057_Box1/Ms1990_057_B001_F001_001_LHJClips_Ms/Access/
 ```
