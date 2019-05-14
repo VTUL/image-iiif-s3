@@ -30,5 +30,5 @@ e.g. Special collection folder example: Ms1990_057_Chadeayne/Edited/Ms1990_057_B
 ```
 4. Run the Ruby script:
 ```
-$ ruby create_iiif_s3.rb Chadeayne_Ms1990_057_Box1.csv Ms1990_057_Chadeayne/Edited/Ms1990_057_Box1/Ms1990_057_B001_F001_001_LHJClips_Ms/Access/
+$ ruby create_iiif_s3.rb Chadeayne_Ms1990_057_Box1.csv Ms1990_057_Chadeayne/Edited/Ms1990_057_Box1/Ms1990_057_B001_F001_001_LHJClips_Ms/Access/ https://img.cloud.lib.vt.edu iiif_s3_test --upload_to_s3=false
 ```
