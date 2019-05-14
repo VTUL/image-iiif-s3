@@ -56,8 +56,8 @@ def add_image(file, id)
   @data.push IiifS3::ImageRecord.new(obj)
 end
 
-if ARGV.length != 2
-  puts "Usage: ruby create_iiif_s3.rb csv_metadata_file image_folder_path"
+if ARGV.length != 5
+  puts "Usage: ruby create_iiif_s3.rb csv_metadata_file image_folder_path manifest_base_path manifest_root_folder --upload_to_s3=false"
   exit
 end
 
@@ -72,13 +72,17 @@ end
 @data = []
 # Set up configuration variables
 opts = {}
+opts[:base_url] = ARGV[2]
 opts[:image_directory_name] = "tiles"
 opts[:output_dir] = "tmp"
 opts[:variants] = { "reference" => 600, "access" => 1200}
-opts[:upload_to_s3] = true
+# get the flag if upload to S3 or not
+args = Hash[ ARGV.join(' ').scan(/--?([^=\s]+)(?:=(\S+))?/) ]
+opts[:upload_to_s3] = (args["upload_to_s3"] == 'true' ? true : false)
 opts[:image_types] = [".jpg", ".tif", ".jpeg", ".tiff"]
 opts[:document_file_types] = [".pdf"]
-opts[:prefix] = "#{@input_folder.split('/')[1..-3].join('/')}"
+# prefix uses manifest_root_folder
+opts[:prefix] = "#{ARGV[3]}/#{@input_folder.split('/')[0..-3].join('/')}"
 
 iiif = IiifS3::Builder.new(opts)
 @config = iiif.config
