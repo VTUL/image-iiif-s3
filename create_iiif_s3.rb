@@ -61,12 +61,13 @@ end
 
 @csv_url = ARGV[0]
 csv_name = File.basename(@csv_url)
-collection_id = csv_name.scan(/^Ms\d{4}_\d{3}/)[0]
+# look for collection id with pattern Ms1990_025
+collection_id = csv_name.scan(/Ms\d{4}_\d{3}/)[0]
 # path to the image files end with "obj_id/image.tif"
 image_folder_path = ARGV[1]
 @input_folder = image_folder_path.slice(image_folder_path.index("#{collection_id}")..-1)
-# read files in the input_folder
-@image_files = Dir[@input_folder + "*"].sort
+# read files in the image folder
+@image_files = Dir[image_folder_path + "*"].sort
 
 # Setup Temporary stores
 @data = []
