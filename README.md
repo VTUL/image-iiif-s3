@@ -1,5 +1,5 @@
 # image-iiif-s3
-This repository contains Ruby script that can be used to generate IIIF level 0 compatible image presentation manifests and tiles, and then to upload them to Amazon S3 bucket for static serving.
+This repository contains Ruby script that can be used to generate IIIF level 0 compatible image presentation manifests and tiles, which can be uploaded to Amazon S3 bucket for static serving.
 
 # Local Development Installation
 The development environment can be set up using [VTUL/iiif_s3-vagrant](https://github.com/VTUL/iiif_s3-vagrant). To deploy on your local machine, first install Vagrant, Ansible, and VirtualBox, then follow the steps below.
@@ -20,15 +20,23 @@ $ export AWS_SECRET_ACCESS_KEY=""
 $ export AWS_BUCKET_NAME=""
 $ export AWS_REGION=""
 ```
-2. Prepare a CSV file
+2. A CSV metadata file
 ```
 e.g. Chadeayne_Ms1990_057_Box1.csv
 ```
-3. A folder with image files
+3. A folder with image files 
 ```
 e.g. Special collection folder example: Ms1990_057_Chadeayne/Edited/Ms1990_057_Box1/Ms1990_057_B001_F001_001_LHJClips_Ms/Access/
 ```
 4. Run the Ruby script:
-```
-$ ruby create_iiif_s3.rb Chadeayne_Ms1990_057_Box1.csv Ms1990_057_Chadeayne/Edited/Ms1990_057_Box1/Ms1990_057_B001_F001_001_LHJClips_Ms/Access/ https://img.cloud.lib.vt.edu iiif_s3_test --upload_to_s3=false
-```
+    * Print help (note that with -u or --upload_to_s3 boolean argument it will upload to S3, otherwise no argument turns the option off):
+    ```
+    $ ruby create_iiif_s3.rb -h
+    ```
+    * Examples:
+    ```
+    $ ruby create_iiif_s3.rb -m Chadeayne_Ms1990_057_Box1.csv -i Ms1990_057_Chadeayne/Edited/Ms1990_057_Box1/Ms1990_057_B001_F001_001_LHJClips_Ms/Access/ -b https://img.cloud.lib.vt.edu -r iiif_s3_test -u
+    ```
+    ```
+    $ ruby create_iiif_s3.rb -m Chadeayne_Ms1990_057_Box1.csv -i Ms1990_057_Chadeayne/Edited/Ms1990_057_Box1/Ms1990_057_B001_F001_001_LHJClips_Ms/Access/ -b https://img.cloud.lib.vt.edu -r iiif_s3_test
+    ```
