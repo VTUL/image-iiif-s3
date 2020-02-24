@@ -38,11 +38,9 @@ def get_metadata(csv_url, id)
   end
 end
 
-def add_image(file, id)
-  # name should be either as numerical or identifier_numerical,
-  # such as Ms1990_025_Per_Awd_B001_F001_006_001.tif or 001.tif
+def add_image(file, id, idx)
   name = File.basename(file, File.extname(file))
-  page_num = name.split("_").last.to_i
+  page_num = idx + 1
   label, description = get_metadata(@csv_url, id)
   obj = {
     "path" => "#{file}",
@@ -153,8 +151,8 @@ create_directories(img_dir)
 
 id = @input_folder.split("/")[-2]
 
-for image_file in @image_files
-  add_image(image_file, id)
+@image_files.each_with_index do |image_file, idx|
+  add_image(image_file, id, idx)
 end
 
 iiif.load(@data)
