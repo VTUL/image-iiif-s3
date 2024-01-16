@@ -1,4 +1,7 @@
 # image-iiif-s3
+## This script is now maintained in the following repository
+[vt-digital-libraries-platform/iiif_s3_docker](https://github.com/vt-digital-libraries-platform/iiif_s3_docker)
+
 This repository contains Ruby script that can be used to generate IIIF level 0 compatible image presentation manifests and tiles, which can be uploaded to Amazon S3 bucket for static serving.
 
 # Local Development Installation
